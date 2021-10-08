@@ -1,4 +1,4 @@
-import * as helper from "./helper.js"
+import * as helper from "./helpers.js"
 
 let idNum = 69;
 
@@ -71,8 +71,7 @@ const renderPost = async () => {
 
         elLoading.classList.add("d-none");
         elDetailBerita.classList.remove("d-none");
-    }
-    catch{
+    } catch{
         elLoading.classList.add("d-none");
         elNotFound.classList.remove("d-none");
         console.log('post', error);
