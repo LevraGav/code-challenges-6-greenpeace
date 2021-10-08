@@ -1,5 +1,13 @@
 export const getPosts = async () => {
   // EDIT HERE
+    try {
+        let res = await fetch('https://jsonplaceholder.typicode.com/posts');
+        let response = await res.json();
+        response = response.splice(0, 16);
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 export const getPost = async (post_id) => {
