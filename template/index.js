@@ -1,7 +1,6 @@
-import { getPosts, getRandomPic } from './helpers.js';
+import * as helpers from './helpers.js';
 
-let elDaftarBerita = document.querySelector('#daftar-berita');
-
+const elDaftarBerita = document.querySelector('#daftar-berita');
 /**
  *
  * @param {String} thumbnail => url yang kita ambil menggunakan Unsplash API
@@ -9,6 +8,7 @@ let elDaftarBerita = document.querySelector('#daftar-berita');
  * @returns DOM Element
  */
 const createPostElement = (thumbnail, post) => {
+  // EDIT HERE
   const elCol = document.createElement('div');
   const elCard = document.createElement('div');
   const elCardImg = document.createElement('img');
@@ -25,34 +25,29 @@ const createPostElement = (thumbnail, post) => {
 
   elCardImg.setAttribute('alt', 'skilvul');
   elCardBtn.innerHTML = 'Read More';
+  elCardImg.src = thumbnail;
+  elCardBody.innerText = post.title;
+  elCardBtn.href = "post.html?post_id=" + post.id;
+  console.log(post);
 
   elCardBody.appendChild(elCardTitle);
   elCardBody.appendChild(elCardBtn);
   elCard.appendChild(elCardImg);
   elCard.appendChild(elCardBody);
   elCol.appendChild(elCard);
-  elDaftarBerita.appendChild(elCol)
-
-  // EDIT HERE
-  elCardTitle.innerHTML = post;
-  elCardImg.src = thumbnail;
-  console.log(elCardImg);
-  elCardBtn.setAttribute("href",  `/post.html?post_id=${post.id}`)
   
-  // console.log(elCol);
   return elCol;
 };
 
-export const renderPosts = async () => {
+const renderPosts = async () => {
   // EDIT HERE
+  let getPosts = await (helpers.getPosts());
 
-  let posts = await getPosts();
-  // console.log(posts);
-  posts.map(async (post) => {
-    let title = `${post.title}`
-    let img = await getRandomPic();
-    createPostElement(img, title);
-  })
+  for (let i = 0; i < 16; i++){
+    const newElement = createPostElement(await (helpers.getRandomPic()), getPosts[i]);
+    elDaftarBerita.appendChild(newElement);
+    
+  }
 };
 
 renderPosts();
